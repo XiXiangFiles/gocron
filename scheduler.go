@@ -453,9 +453,6 @@ func (s *Scheduler) calculateDuration(job *Job) time.Duration {
 
 func (s *Scheduler) remainingDaysToWeekday(lastRun time.Time, job *Job) int {
 	weekDays := job.Weekdays()
-	sort.Slice(weekDays, func(i, j int) bool {
-		return weekDays[i] < weekDays[j]
-	})
 
 	equals := false
 	lastRunWeekday := lastRun.Weekday()
