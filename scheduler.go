@@ -394,7 +394,11 @@ func (s *Scheduler) calculateWeeks(job *Job, lastRun time.Time) nextRun {
 func (s *Scheduler) calculateTotalDaysDifference(lastRun time.Time, daysToWeekday int, job *Job) int {
 	if job.getInterval() > 1 {
 		weekDays := job.Weekdays()
-		if job.lastRun.Weekday() != weekDays[len(weekDays)-1] {
+		isFirstRun := job.RunCount() == 0
+		if isFirstRun && daysToWeekday == 0 {
+			return daysToWeekday
+		}
+		if job.lastRun.Weekday() != weekDays[len(weekDays)-1] && !isFirstRun {
 			return daysToWeekday
 		}
 		if daysToWeekday > 0 {
